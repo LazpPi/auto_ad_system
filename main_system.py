@@ -11,22 +11,6 @@ REST_SECONDS = 60 * 30 # プロジェクターの休憩時間
 
 projector_power = True
 
-def control_HDMI(is_on):
-    if is_on:
-        print("HDMI Output ONF(画面を起します)")
-        subprocess.run("xset -display :0 dpms force on", shell=True)
-    else:
-        print("HDMI Output OFF(画面をスリープします)")
-        subprocess.run("xset -display :0 dpms force off", shell=True)
-
-def check_projector():
-    try:
-        res = subprocess.run('echo "pow 0" | cec-client -s -d 1', shell=True, capture_output=True, text=True, timeout=10)
-        return "power status: on" in res.stdout
-    except Exception as e:
-        print(f"CEC状態確認エラー: {e}")
-        return False
-
 def projector_on():
     global projector_power
     
